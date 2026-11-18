@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java Programming for Kids: Understanding Variables, Loops and Conditions Through Examples</title>
+<meta name="description" content="Play with Java for kids. Fill a jar to learn variables, steer a traffic signal to learn conditions and run laps to learn loops. Free demo, course and blog links inside.">
+<meta name="keywords" content="java programming for kids, java for beginners, java variables, java loops for beginners, java conditions, coding for kids, learn java online, java course for beginners">
+<meta name="theme-color" content="#cdebff">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Java Programming for Kids: Variables, Loops and Conditions">
+<meta property="og:description" content="Jars, traffic signals and playground laps. Try the three big ideas behind every Java program, right on this page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#cdebff;
+  --ink:#112240;
+  --sun:#ffc933;
+  --tomato:#ff5c4d;
+  --grass:#29b36b;
+  --grape:#7b5cff;
+  --white:#ffffff;
+  --pop:0 6px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  margin:0;
+  font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:1.05rem;
+  line-height:1.6;
+  color:var(--ink);
+  background-color:var(--sky);
+  background-image:radial-gradient(rgba(17,34,64,.13) 1.5px,transparent 1.5px);
+  background-size:22px 22px;
+}
+h1,h2,h3{font-family:"Lilita One","Nunito",sans-serif;font-weight:400;line-height:1.05;margin:0;letter-spacing:.01em}
+p{margin:0}
+a{color:inherit}
+.wrap{width:min(1120px,92%);margin-inline:auto}
+:focus-visible{outline:4px solid var(--grape);outline-offset:3px;border-radius:8px}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.8rem 1.4rem;border:3px solid var(--ink);border-radius:999px;
+  font:800 1rem "Nunito",sans-serif;text-decoration:none;cursor:pointer;
+  background:var(--white);color:var(--ink);box-shadow:0 5px 0 var(--ink);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 var(--ink)}
+.btn:active{transform:translateY(5px);box-shadow:0 0 0 var(--ink)}
+.btn.red{background:var(--tomato);color:#fff}
+.btn.sun{background:var(--sun)}
+.btn.grass{background:var(--grass);color:#fff}
+.btn.grape{background:var(--grape);color:#fff}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn.small{padding:.5rem 1rem;font-size:.92rem;box-shadow:0 4px 0 var(--ink)}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:50;background:var(--white);border-bottom:3px solid var(--ink)}
+.header-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem 0}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-family:"Lilita One",sans-serif;font-size:1.45rem}
+.logo-mark{
+  width:42px;height:42px;display:grid;place-items:center;background:var(--sun);
+  border:3px solid var(--ink);border-radius:12px;box-shadow:0 3px 0 var(--ink);transform:rotate(-6deg);font-size:1.4rem
+}
+.nav{display:flex;gap:.2rem;align-items:center}
+.nav a{padding:.4rem .85rem;border-radius:999px;text-decoration:none;font-weight:800;font-size:.97rem}
+.nav a:hover{background:var(--sky)}
+@media (max-width:860px){.nav{display:none}}
+
+/* Hero */
+.hero{padding:3rem 0 4.2rem}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2.6rem;align-items:center}
+.sticker{
+  display:inline-block;background:var(--sun);border:3px solid var(--ink);border-radius:14px;
+  padding:.3rem .9rem;font-weight:800;transform:rotate(-2deg);box-shadow:0 4px 0 var(--ink);margin-bottom:1.1rem
+}
+.hero h1{font-size:clamp(2.6rem,6.4vw,4.9rem);margin-bottom:1.1rem}
+.hero h1 .jar-word{color:var(--grape)}
+.hero h1 .signal-word{color:var(--tomato)}
+.hero h1 .lap-word{color:var(--grass)}
+.lead{font-size:1.2rem;max-width:34rem;margin-bottom:1.6rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:.9rem}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero{padding-top:2rem}}
+
+/* Cards */
+.card{background:var(--white);border:3px solid var(--ink);border-radius:26px;box-shadow:0 8px 0 var(--ink);padding:1.4rem}
+
+/* Code strip */
+.code{
+  margin:0;background:var(--ink);color:#fff;border-radius:16px;padding:.9rem 1.1rem;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92rem;line-height:1.6;
+  white-space:pre;overflow-x:auto;
+}
+.code .k{color:#ffc933}
+.code .t{color:#7be0a8}
+.code .s{color:#ffb4a8}
+.code .n{color:#9fd0ff}
+.code .c{color:#8fa3c7}
+.code .blk{display:block;padding:0 .4rem;margin:0 -.4rem;border-radius:6px;opacity:.5;transition:opacity .2s, background .2s}
+.code .blk.on{opacity:1;background:rgba(255,201,51,.22)}
+
+/* Jar */
+.jar-card{text-align:center}
+.jar-card .hint{font-weight:700;margin-bottom:.4rem}
+.jar-wrap{position:relative;width:210px;margin:.4rem auto 1rem}
+.lid{width:140px;height:32px;margin:0 auto -6px;background:var(--grape);border:3px solid var(--ink);border-radius:12px 12px 4px 4px;position:relative;z-index:3}
+.jar{
+  position:relative;height:260px;border:4px solid var(--ink);border-radius:30px 30px 70px 70px;
+  background:#eaf7ff;overflow:hidden
+}
+.jar-fill{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--sun);transition:height .6s cubic-bezier(.3,1.4,.5,1)}
+.jar-fill::before{
+  content:"";position:absolute;left:0;right:0;top:-10px;height:20px;
+  background:radial-gradient(circle at 10px 10px,var(--sun) 10px,transparent 11px) repeat-x;background-size:20px 20px
+}
+.jar-tag{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);z-index:2;
+  background:var(--white);border:3px solid var(--ink);border-radius:16px;padding:.3rem 1.1rem;box-shadow:0 4px 0 var(--ink)
+}
+.jar-tag small{display:block;font-weight:800;font-size:.85rem;line-height:1.1}
+.jar-tag strong{font-family:"Lilita One",sans-serif;font-size:2.6rem;font-weight:400;line-height:1}
+.falling-star{position:absolute;top:-30px;font-size:1.7rem;z-index:1;animation:drop .8s ease-in forwards}
+@keyframes drop{to{transform:translateY(240px) rotate(260deg);opacity:.2}}
+.jar-actions{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.jar-card .code{text-align:left}
+
+/* Sections */
+section.block{padding:4.2rem 0}
+.sec-head{max-width:40rem;margin-bottom:2rem}
+.sec-head h2{font-size:clamp(2rem,4.6vw,3.2rem);margin-bottom:.7rem}
+.sec-head p{font-size:1.12rem}
+.band{background:var(--white);border-block:3px solid var(--ink)}
+
+/* Variables */
+.var-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+@media (max-width:1000px){.var-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.var-grid{grid-template-columns:1fr}}
+.var-card{display:flex;flex-direction:column;gap:.9rem}
+.type-pill{align-self:flex-start;border:3px solid var(--ink);border-radius:999px;padding:.1rem .9rem;font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace}
+.var-card:nth-child(1) .type-pill{background:var(--sun)}
+.var-card:nth-child(2) .type-pill{background:#b9f0d3}
+.var-card:nth-child(3) .type-pill{background:#ffc9c4}
+.var-card:nth-child(4) .type-pill{background:#d9d0ff}
+.mini-jar{
+  min-height:92px;display:grid;place-items:center;text-align:center;
+  border:3px solid var(--ink);border-radius:18px 18px 34px 34px;background:#eaf7ff;padding:.5rem;
+  font-family:"Lilita One",sans-serif;font-size:1.9rem;word-break:break-word;line-height:1.1
+}
+.var-card p{font-size:.97rem}
+.field{width:100%;padding:.6rem .8rem;border:3px solid var(--ink);border-radius:12px;font:700 1rem "Nunito",sans-serif;color:var(--ink);background:#fff}
+.var-card .code{font-size:.85rem;padding:.7rem .9rem}
+
+/* Signal */
+.signal-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:1.6rem;align-items:start}
+@media (max-width:900px){.signal-grid{grid-template-columns:1fr}}
+.road{
+  position:relative;height:200px;border-radius:18px;border:3px solid var(--ink);overflow:hidden;
+  background:linear-gradient(#bfe8c9 0 38%,#44536f 38% 100%)
+}
+.road::after{
+  content:"";position:absolute;left:0;right:0;top:70%;height:5px;
+  background:repeating-linear-gradient(90deg,#fff 0 28px,transparent 28px 52px)
+}
+.walker{position:absolute;bottom:34px;left:12%;font-size:3.2rem;line-height:1;transition:left 2s ease-in-out;z-index:2}
+.walker.go{left:56%}
+.walker.ready{animation:bob .45s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-8px)}}
+.bubble{
+  position:absolute;left:50%;bottom:100%;transform:translateX(-50%);white-space:nowrap;
+  background:#fff;border:3px solid var(--ink);border-radius:12px;padding:.1rem .7rem;font:800 .9rem "Nunito",sans-serif;margin-bottom:4px
+}
+.light{
+  position:absolute;right:16px;top:12px;width:54px;padding:8px 0;border:3px solid var(--ink);border-radius:16px;
+  background:var(--ink);display:grid;gap:7px;justify-items:center;z-index:2
+}
+.bulb{width:30px;height:30px;border-radius:50%;background:#3a4a6b;transition:background .2s, box-shadow .2s}
+.bulb.r.on{background:var(--tomato);box-shadow:0 0 18px var(--tomato)}
+.bulb.y.on{background:var(--sun);box-shadow:0 0 18px var(--sun)}
+.bulb.g.on{background:var(--grass);box-shadow:0 0 18px var(--grass)}
+.lamp-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.1rem}
+.lamp-btn[aria-pressed="true"]{outline:4px solid var(--grape);outline-offset:2px}
+.signal-side{display:flex;flex-direction:column;gap:1rem}
+
+/* Loops */
+.loop-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:start}
+@media (max-width:900px){.loop-grid{grid-template-columns:1fr}}
+.seg{display:inline-flex;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff}
+.seg button{border:0;background:transparent;padding:.5rem 1.2rem;font:800 .97rem "Nunito",sans-serif;color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--grape);color:#fff}
+.control-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1.1rem}
+.range-box{display:flex;align-items:center;gap:.7rem;font-weight:800}
+input[type="range"]{accent-color:var(--grape);width:140px}
+.lanes{display:grid;gap:8px;margin:1rem 0}
+.lane{position:relative;height:34px;border:3px solid var(--ink);border-radius:999px;background:#f1ecff;overflow:hidden}
+.lane .bar{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--grape)}
+.lane .who{position:absolute;top:50%;transform:translate(-50%,-50%);left:0;font-size:1.2rem;transition:none}
+.lane .num{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-weight:800;font-size:.85rem}
+.counter{
+  display:inline-block;background:var(--sun);border:3px solid var(--ink);border-radius:12px;padding:.1rem .8rem;
+  font:800 1rem ui-monospace,Menlo,Consolas,monospace;box-shadow:0 3px 0 var(--ink)
+}
+.console{background:#0b1730;color:#c8f7dc;border-radius:14px;padding:.8rem 1rem;min-height:104px;max-height:170px;overflow:auto;font:600 .9rem ui-monospace,Menlo,Consolas,monospace}
+.console div{margin:0}
+
+/* Canteen */
+.canteen{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:start}
+@media (max-width:900px){.canteen{grid-template-columns:1fr}}
+.queue{display:flex;flex-wrap:wrap;gap:.8rem;margin:1rem 0}
+.kid{
+  min-width:96px;text-align:center;border:3px solid var(--ink);border-radius:18px;padding:.5rem .8rem;background:#fff;
+  transition:background .2s, transform .2s
+}
+.kid span{display:block;font-size:1.6rem;line-height:1.2}
+.kid b{display:block;font-size:.95rem}
+.kid small{font-weight:700}
+.kid.active{transform:translateY(-6px);background:var(--sun)}
+.kid.ok{background:#b9f0d3}
+.kid.no{background:#ffc9c4}
+
+/* Links */
+.link-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+@media (max-width:980px){.link-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.link-grid{grid-template-columns:1fr}}
+.link-card{
+  display:flex;flex-direction:column;gap:.6rem;text-decoration:none;padding:1.4rem;
+  border:3px solid var(--ink);border-radius:26px;box-shadow:0 8px 0 var(--ink);
+  transition:transform .15s ease, box-shadow .15s ease;min-height:210px
+}
+.link-card:hover{transform:translateY(4px);box-shadow:0 4px 0 var(--ink)}
+.link-card .ico{font-size:2.4rem;line-height:1}
+.link-card h3{font-size:1.55rem}
+.link-card p{font-size:.98rem;flex:1}
+.link-card .go{font-weight:800;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
+.lc1{background:var(--sun)}
+.lc2{background:#b9f0d3}
+.lc3{background:#ffc9c4}
+.lc4{background:#d9d0ff}
+.lc5{background:#fff}
+.lc6{background:#bfe6ff}
+
+/* Footer */
+.site-footer{background:var(--ink);color:#fff;padding:3rem 0 2rem;border-top:3px solid var(--ink)}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr}}
+.site-footer h3{font-size:1.4rem;margin-bottom:.7rem;color:var(--sun)}
+.site-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.site-footer a{text-decoration:none;font-weight:700}
+.site-footer a:hover{text-decoration:underline}
+.foot-note{margin-top:2rem;padding-top:1.2rem;border-top:2px solid rgba(255,255,255,.2);font-size:.92rem;color:#b9c6e0}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-in">
+    <a class="brand" href="#top" aria-label="Java Playground home">
+      <span class="logo-mark" aria-hidden="true">☕</span>
+      <span>Java Playground</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#jars">Jars</a>
+      <a href="#signal">Signal</a>
+      <a href="#laps">Laps</a>
+      <a href="#canteen">Canteen</a>
+      <a href="#links">Explore</a>
+    </nav>
+    <a class="btn red small" href="https://justacademyjunior.com/free-demo" target="_blank" rel="noopener">Book a free demo</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="sticker">For curious kids and their parents</span>
+      <h1>Java for kids starts with <span class="jar-word">jars</span>, <span class="signal-word">signals</span> and <span class="lap-word">laps</span>.</h1>
+      <p class="lead">Every Java program is built from three ideas: variables that remember, conditions that decide and loops that repeat. Play with each one on this page, no typing skills needed.</p>
+      <div class="cta-row">
+        <a class="btn sun" href="#jars">Start playing</a>
+        <a class="btn" href="https://justacademyjunior.com/blog/java-programming-for-kids-understanding-variables-loops-and-conditions-through-examples" target="_blank" rel="noopener">Read the full blog</a>
+      </div>
+    </div>
+
+    <div class="card jar-card" aria-labelledby="jar-title">
+      <h2 id="jar-title" style="font-size:1.7rem;margin-bottom:.2rem">The score jar</h2>
+      <p class="hint">Catch a star and watch the variable change.</p>
+      <div class="jar-wrap">
+        <div class="lid"></div>
+        <div class="jar" id="hero-jar">
+          <div class="jar-fill" id="hero-fill"></div>
+          <div class="jar-tag"><small>score</small><strong id="hero-score">0</strong></div>
+        </div>
+      </div>
+      <div class="jar-actions">
+        <button class="btn sun small" id="add-star" type="button">Add 10 points</button>
+        <button class="btn small" id="spend-star" type="button">Spend 10</button>
+      </div>
+      <pre class="code" id="hero-code" aria-live="polite"></pre>
+    </div>
+  </div>
+</section>
+
+<!-- VARIABLES -->
+<section class="block band" id="jars">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Variables are labelled jars</h2>
+      <p>A variable has a name on the outside and a value on the inside. Java also needs to know what kind of thing the jar holds. Change each jar below and see the Java line update.</p>
+    </div>
+    <div class="var-grid">
+      <article class="card var-card">
+        <span class="type-pill">int</span>
+        <div class="mini-jar" id="v-int-show">10</div>
+        <p>Whole numbers, like age or number of books.</p>
+        <label class="sr" style="font-weight:800">age
+          <input class="field" id="v-int" type="number" min="0" max="120" value="10">
+        </label>
+        <pre class="code" id="v-int-code"></pre>
+      </article>
+      <article class="card var-card">
+        <span class="type-pill">double</span>
+        <div class="mini-jar" id="v-dbl-show">4.5</div>
+        <p>Numbers with a decimal point, like height or price.</p>
+        <label style="font-weight:800">height
+          <input class="field" id="v-dbl" type="number" step="0.1" min="0" max="9" value="4.5">
+        </label>
+        <pre class="code" id="v-dbl-code"></pre>
+      </article>
+      <article class="card var-card">
+        <span class="type-pill">String</span>
+        <div class="mini-jar" id="v-str-show">Aarav</div>
+        <p>Words and names, always inside double quotes.</p>
+        <label style="font-weight:800">name
+          <input class="field" id="v-str" type="text" maxlength="14" value="Aarav">
+        </label>
+        <pre class="code" id="v-str-code"></pre>
+      </article>
+      <article class="card var-card">
+        <span class="type-pill">boolean</span>
+        <div class="mini-jar" id="v-bool-show">true</div>
+        <p>Only true or false, like a light switch.</p>
+        <button class="btn grape small" id="v-bool" type="button">Flip likesCricket</button>
+        <pre class="code" id="v-bool-code"></pre>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONDITIONS -->
+<section class="block" id="signal">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Conditions are traffic signals</h2>
+      <p>A condition lets a program choose. Pick a signal colour and see which branch of the if and else code wakes up.</p>
+    </div>
+    <div class="signal-grid">
+      <div class="card">
+        <div class="road" id="road" role="img" aria-label="A child at a road crossing with a traffic signal">
+          <div class="walker" id="walker"><span class="bubble" id="bubble">I wait</span><span aria-hidden="true">🧒</span></div>
+          <div class="light" aria-hidden="true">
+            <div class="bulb r" id="bulb-r"></div>
+            <div class="bulb y" id="bulb-y"></div>
+            <div class="bulb g" id="bulb-g"></div>
+          </div>
+        </div>
+        <div class="lamp-row" role="group" aria-label="Choose the signal colour">
+          <button class="btn red small lamp-btn" type="button" data-signal="red" aria-pressed="true">Red</button>
+          <button class="btn sun small lamp-btn" type="button" data-signal="yellow" aria-pressed="false">Yellow</button>
+          <button class="btn grass small lamp-btn" type="button" data-signal="green" aria-pressed="false">Green</button>
+          <button class="btn small" type="button" id="auto-cycle" aria-pressed="false">Auto cycle: off</button>
+        </div>
+      </div>
+      <div class="signal-side">
+        <pre class="code" id="signal-code" aria-live="polite"></pre>
+        <p><strong>Try this:</strong> only one branch runs at a time. Java checks the first rule, then the next, and falls to else when nothing matched.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOOPS -->
+<section class="block band" id="laps">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Loops are playground laps</h2>
+      <p>A coach says run five laps once, and the class keeps going until the count is done. Choose a loop type, pick the number of laps and press run.</p>
+    </div>
+    <div class="loop-grid">
+      <div class="card">
+        <div class="control-row">
+          <div class="seg" role="group" aria-label="Loop type">
+            <button type="button" id="mode-for" aria-pressed="true">for loop</button>
+            <button type="button" id="mode-while" aria-pressed="false">while loop</button>
+          </div>
+          <label class="range-box">Laps
+            <input type="range" id="laps-range" min="1" max="8" value="4">
+            <output id="laps-out">4</output>
+          </label>
+          <button class="btn grape small" id="run-loop" type="button">Run the loop</button>
+        </div>
+        <div class="lanes" id="lanes" aria-hidden="true"></div>
+        <div>Counter: <span class="counter" id="loop-counter">waiting</span></div>
+      </div>
+      <div class="signal-side">
+        <pre class="code" id="loop-code"></pre>
+        <div class="console" id="console" aria-live="polite"><div>Press run to see what Java prints.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CANTEEN -->
+<section class="block" id="canteen">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>All three ideas in one canteen</h2>
+      <p>Real programs mix the ideas. Here a variable holds the sandwich price, a loop visits every kid in the queue and a condition decides who gets served. Change the price and run it again.</p>
+    </div>
+    <div class="canteen">
+      <div class="card">
+        <label class="range-box" style="margin-bottom:.6rem">Sandwich price
+          <input type="range" id="price-range" min="20" max="60" step="10" value="40">
+          <output id="price-out">₹40</output>
+        </label>
+        <div class="queue" id="queue"></div>
+        <button class="btn red small" id="run-canteen" type="button">Serve the queue</button>
+      </div>
+      <div class="signal-side">
+        <pre class="code" id="canteen-code"></pre>
+        <div class="console" id="canteen-log" aria-live="polite"><div>Press the button to start serving.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LINKS -->
+<section class="block band" id="links">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Keep exploring</h2>
+      <p>Done playing? These pages go further, from a free demo class to the full Java course and the complete blog post behind this page.</p>
+    </div>
+    <div class="link-grid">
+      <a class="link-card lc1" href="https://justacademyjunior.com/free-demo" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true">🎈</span>
+        <h3>Free demo class</h3>
+        <p>Let your child try a live beginner session and ask every question you have.</p>
+        <span class="go">Book the demo</span>
+      </a>
+      <a class="link-card lc2" href="https://justacademyjunior.com/courses/java-programming" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true">☕</span>
+        <h3>Java Programming course</h3>
+        <p>See how the lessons move from variables and conditions to loops and mini projects.</p>
+        <span class="go">View the course</span>
+      </a>
+      <a class="link-card lc3" href="https://justacademyjunior.com/blog/java-programming-for-kids-understanding-variables-loops-and-conditions-through-examples" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true">📖</span>
+        <h3>The full blog post</h3>
+        <p>Read the parent friendly guide that explains every idea on this page in more detail.</p>
+        <span class="go">Read the blog</span>
+      </a>
+      <a class="link-card lc4" href="https://justacademyjunior.com/programs" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true">🧩</span>
+        <h3>All programs</h3>
+        <p>Browse more coding paths for young learners and find the next adventure.</p>
+        <span class="go">Explore programs</span>
+      </a>
+      <a class="link-card lc5" href="https://www.justacademy.co/course-detail/mumbai/javascript-training-in-mumbai" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true">🌐</span>
+        <h3>JavaScript training in Mumbai</h3>
+        <p>A next step for older learners who want to make websites move and react.</p>
+        <span class="go">See the course</span>
+      </a>
+      <a class="link-card lc6" href="https://justacademyjunior.com/contact" target="_blank" rel="noopener">
+        <span class="ico" aria-hidden="true">💬</span>
+        <h3>Contact and enroll</h3>
+        <p>Ready to begin or still curious? Send a message and get a friendly reply.</p>
+        <span class="go">Enroll now</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h3>Java Playground</h3>
+        <p>A small page about three big ideas. Variables remember, conditions decide and loops repeat. Everything above runs in your browser with plain HTML, CSS and JavaScript.</p>
+      </div>
+      <div>
+        <h3>On this page</h3>
+        <ul>
+          <li><a href="#jars">Variables as jars</a></li>
+          <li><a href="#signal">Conditions as signals</a></li>
+          <li><a href="#laps">Loops as laps</a></li>
+          <li><a href="#canteen">The canteen mix</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Links</h3>
+        <ul>
+          <li><a href="https://justacademyjunior.com/free-demo" target="_blank" rel="noopener">Free demo</a></li>
+          <li><a href="https://justacademyjunior.com/courses/java-programming" target="_blank" rel="noopener">Java course</a></li>
+          <li><a href="https://justacademyjunior.com/programs" target="_blank" rel="noopener">Programs</a></li>
+          <li><a href="https://justacademyjunior.com/blog/java-programming-for-kids-understanding-variables-loops-and-conditions-through-examples" target="_blank" rel="noopener">Blog post</a></li>
+          <li><a href="https://www.justacademy.co/course-detail/mumbai/javascript-training-in-mumbai" target="_blank" rel="noopener">JavaScript in Mumbai</a></li>
+          <li><a href="https://justacademyjunior.com/contact" target="_blank" rel="noopener">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot-note">Java Programming for Kids: Understanding Variables, Loops and Conditions Through Examples. Built to run on GitHub Pages.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sleep = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); };
+  var kw  = function(x){ return '<span class="k">' + x + '</span>'; };
+  var ty  = function(x){ return '<span class="t">' + x + '</span>'; };
+  var st  = function(x){ return '<span class="s">' + esc(x) + '</span>'; };
+  var nm  = function(x){ return '<span class="n">' + esc(x) + '</span>'; };
+
+  /* HERO JAR */
+  var score = 0;
+  var heroFill = $('#hero-fill'), heroScore = $('#hero-score'), heroCode = $('#hero-code'), heroJar = $('#hero-jar');
+  function renderHero(op){
+    heroFill.style.height = score + '%';
+    heroScore.textContent = score;
+    heroCode.innerHTML = ty('int') + ' score = ' + nm(score) + ';' + (op ? '\n' + op : '');
+  }
+  function dropStar(){
+    if (reduce) return;
+    var s = document.createElement('span');
+    s.className = 'falling-star';
+    s.textContent = '⭐';
+    s.style.left = (15 + Math.random() * 60) + '%';
+    heroJar.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 850);
+  }
+  $('#add-star').addEventListener('click', function(){
+    if (score >= 100) { renderHero(kw('//') + ' <span class="c">the jar is full, spend some points</span>'); return; }
+    score += 10; dropStar();
+    renderHero('score = score + ' + nm(10) + ';');
+  });
+  $('#spend-star').addEventListener('click', function(){
+    if (score <= 0) { renderHero('<span class="c">// the jar is empty, add some points</span>'); return; }
+    score -= 10;
+    renderHero('score = score - ' + nm(10) + ';');
+  });
+  renderHero();
+  (async function intro(){
+    for (var i = 0; i < 3; i++){
+      await sleep(reduce ? 0 : 450);
+      score += 10; dropStar();
+      renderHero('score = score + ' + nm(10) + ';');
+    }
+  })();
+
+  /* VARIABLES */
+  function fmtDouble(v){ var n = parseFloat(v); if (isNaN(n)) n = 0; return Number.isInteger(n) ? n.toFixed(1) : String(n); }
+  var vInt = $('#v-int'), vDbl = $('#v-dbl'), vStr = $('#v-str'), vBool = $('#v-bool'), boolVal = true;
+  function renderVars(){
+    var i = parseInt(vInt.value, 10); if (isNaN(i)) i = 0;
+    $('#v-int-show').textContent = i;
+    $('#v-int-code').innerHTML = ty('int') + ' age = ' + nm(i) + ';';
+    var d = fmtDouble(vDbl.value);
+    $('#v-dbl-show').textContent = d;
+    $('#v-dbl-code').innerHTML = ty('double') + ' height = ' + nm(d) + ';';
+    var s = vStr.value;
+    $('#v-str-show').textContent = s || '(empty)';
+    $('#v-str-code').innerHTML = ty('String') + ' name = ' + st('"' + s + '"') + ';';
+    $('#v-bool-show').textContent = boolVal;
+    $('#v-bool-code').innerHTML = ty('boolean') + ' likesCricket = ' + kw(boolVal) + ';';
+  }
+  [vInt, vDbl, vStr].forEach(function(el){ el.addEventListener('input', renderVars); });
+  vBool.addEventListener('click', function(){ boolVal = !boolVal; renderVars(); });
+  renderVars();
+
+  /* CONDITIONS */
+  var states = {
+    green:  { branch: 0, cls: 'go',    say: 'Green means I walk!' },
+    yellow: { branch: 1, cls: 'ready', say: 'Yellow means get ready' },
+    red:    { branch: 2, cls: '',      say: 'Red means I wait' }
+  };
+  var walker = $('#walker'), bubble = $('#bubble'), signalCode = $('#signal-code');
+  var current = 'red';
+  function setSignal(name){
+    current = name;
+    var s = states[name];
+    walker.className = 'walker ' + s.cls;
+    bubble.textContent = s.say;
+    ['r','y','g'].forEach(function(c){ $('#bulb-' + c).classList.remove('on'); });
+    $('#bulb-' + name.charAt(0)).classList.add('on');
+    document.querySelectorAll('.lamp-btn').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.signal === name)); });
+    var on = function(i){ return 'blk' + (s.branch === i ? ' on' : ''); };
+    signalCode.innerHTML =
+      ty('String') + ' signal = ' + st('"' + name + '"') + ';\n' +
+      '<span class="' + on(0) + '">' + kw('if') + ' (signal.equals(' + st('"green"') + ')) {\n    walk();\n</span>' +
+      '<span class="' + on(1) + '">} ' + kw('else if') + ' (signal.equals(' + st('"yellow"') + ')) {\n    getReady();\n</span>' +
+      '<span class="' + on(2) + '">} ' + kw('else') + ' {\n    wait();\n}</span>';
+  }
+  document.querySelectorAll('.lamp-btn').forEach(function(b){
+    b.addEventListener('click', function(){ stopAuto(); setSignal(b.dataset.signal); });
+  });
+  var autoTimer = null, autoBtn = $('#auto-cycle');
+  function stopAuto(){ if (autoTimer){ clearInterval(autoTimer); autoTimer = null; } autoBtn.setAttribute('aria-pressed','false'); autoBtn.textContent = 'Auto cycle: off'; }
+  autoBtn.addEventListener('click', function(){
+    if (autoTimer){ stopAuto(); return; }
+    var order = ['green','yellow','red'];
+    setSignal(order[(order.indexOf(current) + 1) % 3]);
+    autoTimer = setInterval(function(){ setSignal(order[(order.indexOf(current) + 1) % 3]); }, 2600);
+    autoBtn.setAttribute('aria-pressed','true'); autoBtn.textContent = 'Auto cycle: on';
+  });
+  setSignal('red');
+
+  /* LOOPS */
+  var mode = 'for', running = false;
+  var lapsRange = $('#laps-range'), lapsOut = $('#laps-out'), lanesEl = $('#lanes'), counter = $('#loop-counter'), consoleEl = $('#console'), loopCode = $('#loop-code'), runBtn = $('#run-loop');
+  function loopSource(){
+    var n = parseInt(lapsRange.value, 10);
+    if (mode === 'for'){
+      return kw('for') + ' (' + ty('int') + ' lap = ' + nm(1) + '; lap &lt;= ' + nm(n) + '; lap++) {\n' +
+             '    System.out.println(' + st('"Running lap "') + ' + lap);\n}';
+    }
+    return ty('int') + ' lapsLeft = ' + nm(n) + ';\n' +
+           kw('while') + ' (lapsLeft &gt; ' + nm(0) + ') {\n' +
+           '    System.out.println(' + st('"Laps left: "') + ' + lapsLeft);\n' +
+           '    lapsLeft = lapsLeft - ' + nm(1) + ';\n}';
+  }
+  function buildLanes(){
+    var n = parseInt(lapsRange.value, 10);
+    lanesEl.innerHTML = '';
+    for (var i = 1; i <= n; i++){
+      var lane = document.createElement('div');
+      lane.className = 'lane';
+      lane.innerHTML = '<div class="bar"></div><span class="who">🏃</span><span class="num">lap ' + i + '</span>';
+      lanesEl.appendChild(lane);
+    }
+  }
+  function refreshLoop(){
+    lapsOut.textContent = lapsRange.value;
+    loopCode.innerHTML = loopSource();
+    if (!running){ buildLanes(); counter.textContent = 'waiting'; }
+  }
+  lapsRange.addEventListener('input', refreshLoop);
+  [['mode-for','for'],['mode-while','while']].forEach(function(p){
+    $('#' + p[0]).addEventListener('click', function(){
+      if (running) return;
+      mode = p[1];
+      $('#mode-for').setAttribute('aria-pressed', String(mode === 'for'));
+      $('#mode-while').setAttribute('aria-pressed', String(mode === 'while'));
+      refreshLoop();
+    });
+  });
+  function log(box, text){ var d = document.createElement('div'); d.textContent = text; box.appendChild(d); box.scrollTop = box.scrollHeight; }
+  runBtn.addEventListener('click', async function(){
+    if (running) return;
+    running = true; runBtn.disabled = true;
+    buildLanes(); consoleEl.innerHTML = '';
+    var n = parseInt(lapsRange.value, 10), dur = reduce ? 60 : 650;
+    var lanes = lanesEl.querySelectorAll('.lane');
+    for (var i = 1; i <= n; i++){
+      var value = mode === 'for' ? i : n - i + 1;
+      counter.textContent = (mode === 'for' ? 'lap = ' : 'lapsLeft = ') + value;
+      log(consoleEl, (mode === 'for' ? 'Running lap ' : 'Laps left: ') + value);
+      var lane = lanes[i - 1], bar = lane.querySelector('.bar'), who = lane.querySelector('.who');
+      bar.style.transition = 'width ' + dur + 'ms linear';
+      who.style.transition = 'left ' + dur + 'ms linear';
+      await sleep(20);
+      bar.style.width = '100%'; who.style.left = '95%';
+      await sleep(dur + 90);
+    }
+    if (mode === 'for'){
+      counter.textContent = 'lap = ' + (n + 1);
+      log(consoleEl, 'lap is now ' + (n + 1) + ', bigger than ' + n + ', so the loop stops.');
+    } else {
+      counter.textContent = 'lapsLeft = 0';
+      log(consoleEl, 'lapsLeft is 0, so the loop stops.');
+    }
+    running = false; runBtn.disabled = false;
+  });
+  refreshLoop();
+
+  /* CANTEEN */
+  var kids = [
+    { name: 'Mia', money: 30, face: '👧' },
+    { name: 'Kabir', money: 50, face: '👦' },
+    { name: 'Zoya', money: 20, face: '🧒' },
+    { name: 'Ishan', money: 60, face: '🧑' }
+  ];
+  var priceRange = $('#price-range'), priceOut = $('#price-out'), queueEl = $('#queue'), canteenLog = $('#canteen-log'), canteenCode = $('#canteen-code'), canteenBtn = $('#run-canteen'), serving = false;
+  function renderCanteen(){
+    var p = parseInt(priceRange.value, 10);
+    priceOut.textContent = '₹' + p;
+    canteenCode.innerHTML =
+      ty('int') + ' price = ' + nm(p) + ';\n' +
+      ty('int') + '[] money = {' + kids.map(function(k){ return nm(k.money); }).join(', ') + '};\n' +
+      ty('int') + ' sold = ' + nm(0) + ';\n' +
+      kw('for') + ' (' + ty('int') + ' i = ' + nm(0) + '; i &lt; money.length; i++) {\n' +
+      '    ' + kw('if') + ' (money[i] &gt;= price) {\n' +
+      '        sold = sold + ' + nm(1) + ';\n' +
+      '    }\n}';
+    if (!serving){
+      queueEl.innerHTML = '';
+      kids.forEach(function(k){
+        var d = document.createElement('div');
+        d.className = 'kid';
+        d.innerHTML = '<span aria-hidden="true">' + k.face + '</span><b>' + k.name + '</b><small>₹' + k.money + '</small>';
+        queueEl.appendChild(d);
+      });
+    }
+  }
+  priceRange.addEventListener('input', renderCanteen);
+  canteenBtn.addEventListener('click', async function(){
+    if (serving) return;
+    renderCanteen();
+    serving = true; canteenBtn.disabled = true;
+    canteenLog.innerHTML = '';
+    var p = parseInt(priceRange.value, 10), sold = 0, chips = queueEl.querySelectorAll('.kid');
+    for (var i = 0; i < kids.length; i++){
+      chips[i].classList.add('active');
+      await sleep(reduce ? 60 : 650);
+      chips[i].classList.remove('active');
+      if (kids[i].money >= p){
+        sold++; chips[i].classList.add('ok');
+        log(canteenLog, kids[i].name + ' has ₹' + kids[i].money + '. Sandwich served.');
+      } else {
+        chips[i].classList.add('no');
+        log(canteenLog, kids[i].name + ' needs ₹' + (p - kids[i].money) + ' more.');
+      }
+    }
+    log(canteenLog, 'sold = ' + sold + ' out of ' + kids.length + ' kids.');
+    serving = false; canteenBtn.disabled = false;
+  });
+  renderCanteen();
+})();
+</script>
+</body>
+</html>
